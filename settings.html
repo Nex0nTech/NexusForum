@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>NexonTech – Settings</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <style>
+    :root {
+      --bg: #0b1020;
+      --surface: rgba(255,255,255,0.04);
+      --border: #1f2937;
+      --text: #e5e7eb;
+      --text-muted: #9ca3af;
+      --accent: #10b981;
+
+      --radius: 1.2rem;
+      --shadow: 0 18px 40px rgba(0,0,0,0.45);
+      --blur: blur(18px);
+      --transition: 0.28s ease;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+      background: radial-gradient(circle at top, #111827 0, #020617 45%, #000 100%);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* NAVBAR */
+    .navbar {
+      display: flex;
+      gap: 1.5rem;
+      padding: 1rem 1.5rem;
+      background: rgba(15,23,42,0.9);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(16px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .navbar a {
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 500;
+      transition: var(--transition);
+    }
+    .navbar a:hover {
+      color: var(--accent);
+    }
+
+    main {
+      padding: 2rem;
+      max-width: 700px;
+      margin: auto;
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+
+    /* CARD */
+    .card {
+      background: var(--surface);
+      backdrop-filter: var(--blur);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: var(--shadow);
+    }
+
+    .card h2 {
+      margin-top: 0;
+      font-size: 1.3rem;
+      margin-bottom: 1rem;
+    }
+
+    /* SWITCH iOS STYLE */
+    .setting-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 1rem 0;
+    }
+
+    .switch {
+      position: relative;
+      width: 52px;
+      height: 30px;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      inset: 0;
+      background: #4b5563;
+      border-radius: 30px;
+      transition: var(--transition);
+    }
+
+    .slider:before {
+      content: "";
+      position: absolute;
+      height: 24px;
+      width: 24px;
+      left: 3px;
+      bottom: 3px;
+      background: white;
+      border-radius: 50%;
+      transition: var(--transition);
+    }
+
+    input:checked + .slider {
+      background: var(--accent);
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(22px);
+    }
+
+    /* COLOR PICKER */
+    .color-row {
+      display: flex;
+      gap: 0.6rem;
+      margin-top: 0.8rem;
+    }
+
+    .color-dot {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: var(--transition);
+    }
+
+    .color-dot:hover {
+      transform: scale(1.1);
+    }
+
+    .red { background: #ef4444; }
+    .yellow { background: #facc15; }
+    .green { background: #065f46; }
+    .purple { background: #8b5cf6; }
+  </style>
+</head>
+
+<body>
+
+<!-- NAVBAR (con Settings aggiunto) -->
+<nav class="navbar">
+  <a href="index.html">Home</a>
+  <a href="blog.html">Blog</a>
+  <a href="social.html">Social</a>
+  <a href="settings.html">Settings</a>
+</nav>
+
+<main>
+
+  <h1>Settings</h1>
+
+  <!-- THEME -->
+  <div class="card">
+    <h2>Appearance</h2>
+
+    <div class="setting-row">
+      <span>Dark Mode</span>
+      <label class="switch">
+        <input type="checkbox">
+        <span class="slider"></span>
+      </label>
+    </div>
+
+    <div class="setting-row">
+      <span>Legacy Mode</span>
+      <label class="switch">
+        <input type="checkbox">
+        <span class="slider"></span>
+      </label>
+    </div>
+  </div>
+
+  <!-- ACCENT COLOR -->
+  <div class="card">
+    <h2>Accent Color</h2>
+    <div class="color-row">
+      <div class="color-dot red"></div>
+      <div class="color-dot yellow"></div>
+      <div class="color-dot green"></div>
+      <div class="color-dot purple"></div>
+    </div>
+  </div>
+
+  <!-- FEATURES -->
+  <div class="card">
+    <h2>Features</h2>
+
+    <div class="setting-row">
+      <span>Clock on Home</span>
+      <label class="switch">
+        <input type="checkbox">
+        <span class="slider"></span>
+      </label>
+    </div>
+
+    <div class="setting-row">
+      <span>AI Summary</span>
+      <label class="switch">
+        <input type="checkbox">
+        <span class="slider"></span>
+      </label>
+    </div>
+  </div>
+
+  <!-- ACCOUNT -->
+  <div class="card">
+    <h2>Account</h2>
+    <div class="setting-row">
+      <span>Linked Account</span>
+      <button style="
+        padding: 0.5rem 1rem;
+        border-radius: 0.6rem;
+        border: 1px solid var(--border);
+        background: var(--surface);
+        color: var(--text);
+        cursor: pointer;
+        transition: var(--transition);
+      ">Connect</button>
+    </div>
+  </div>
+
+</main>
+
+</body>
+</html>
