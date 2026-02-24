@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8" />
+    <title>NexonTech Hub</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+        :root {
+            --bg: #050816;
+            --bg-alt: #0b1020;
+            --accent: #4f46e5;
+            --accent-soft: rgba(79, 70, 229, 0.25);
+            --text: #f9fafb;
+            --muted: #9ca3af;
+            --card: rgba(15, 23, 42, 0.85);
+            --border: rgba(148, 163, 184, 0.3);
+            --danger: #f97373;
+            --success: #22c55e;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+                "Segoe UI", sans-serif;
+            background: radial-gradient(circle at top, #111827 0, #020617 45%, #000 100%);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* NAVBAR */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            backdrop-filter: blur(18px);
+            background: linear-gradient(
+                to bottom,
+                rgba(15, 23, 42, 0.95),
+                rgba(15, 23, 42, 0.7),
+                transparent
+            );
+            border-bottom: 1px solid rgba(148, 163, 184, 0.25);
+        }
+
+        .nav {
+            max-width: 1120px;
+            margin: 0 auto;
+            padding: 0.75rem 1.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .logo-badge {
+            width: 32px;
+            height: 32px;
+            border-radius: 0.9rem;
+            background: radial-gradient(circle at 20% 0, #a855f7, #4f46e5 45%, #0ea5e9 100%);
+            box-shadow:
+                0 0 18px rgba(79, 70, 229, 0.8),
+                0 0 40px rgba(14, 165, 233, 0.5);
+        }
+
+        .logo-text-main {
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            font-size: 1rem;
+        }
+
+        .logo-text-sub {
+            font-size: 0.75rem;
+            color: var(--muted);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.25rem;
+            font-size: 0.9rem;
+        }
+
+        .nav-links a {
+            color: var(--muted);
+            text-decoration: none;
+            position: relative;
+            padding-bottom: 0.15rem;
+        }
+
+        .nav-links a::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 2px;
+            border-radius: 999px;
+            background: linear-gradient(to right, #4f46e5, #22c55e);
+            transition: width 0.2s ease-out;
+        }
+
+        .nav-links a:hover {
+            color: var(--text);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-cta {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn {
+            border-radius: 999px;
+            padding: 0.45rem 0.9rem;
+            font-size: 0.8rem;
+            border: 1px solid rgba(148, 163, 184, 0.4);
+            background: rgba(15, 23, 42, 0.8);
+            color: var(--text);
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            transition: all 0.18s ease-out;
+        }
+
+        .btn span {
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            border-color: transparent;
+            background: linear-gradient(135deg, #4f46e5, #0ea5e9);
+            box-shadow:
+                0 0 18px rgba(79, 70, 229, 0.7),
+                0 0 40px rgba(14, 165, 233, 0.5);
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+            box-shadow:
+                0 10px 25px rgba(15, 23, 42, 0.7),
+                0 0 25px rgba(79, 70, 229, 0.4);
+        }
+
+        /* HERO */
+        main {
+            flex: 1;
+        }
+
+        .hero {
+            max-width: 1120px;
+            margin: 0 auto;
+            padding: 2.5rem 1.25rem 2rem;
+            display: grid;
+            grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        .hero-kicker {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.18em;
+            color: #a5b4fc;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.25rem 0.7rem;
+            border-radius: 999px;
+            border: 1px solid rgba(129, 140, 248, 0.4);
+            background: radial-gradient(circle at top left, rgba(79, 70, 229, 0.35), transparent);
+        }
+
+        .hero-title {
+            margin-top: 1.1rem;
+            font-size: clamp(2.4rem, 4vw, 3.1rem);
+            line-height: 1.1;
+            letter-spacing: 0.02em;
+        }
+
+        .hero-title span {
+            background: linear-gradient(120deg, #4f46e5, #a855f7, #22c55e);
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+
+        .hero-subtitle {
+            margin-top: 0.9rem;
+            color: var(--muted);
+            font-size: 0.98rem;
+            max-width: 34rem;
+        }
+
+        .hero-actions {
+            margin-top: 1.4rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.7rem;
+        }
+
+        .hero-meta {
+            margin-top: 1.4rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            font-size: 0.8rem;
+            color: var(--muted);
+        }
+
+        .hero-meta strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .hero-right {
+            position: relative;
+            min-height: 260px;
+        }
+
+        .orb {
+            position: absolute;
+            inset: 0;
+            border-radius: 1.8rem;
+            background:
+                radial-gradient(circle at 0 0, rgba(79, 70, 229, 0.6), transparent 55%),
+                radial-gradient(circle at 100% 0, rgba(14, 165, 233, 0.5), transparent 55%),
+                radial-gradient(circle at 50% 100%, rgba(34, 197, 94, 0.4), transparent 55%);
+            opacity: 0.9;
+            filter: blur(1px);
+        }
+
+        .hero-panel {
+            position: relative;
+            z-index: 1;
+            margin: 0.4rem;
+            padding: 1rem;
+            border-radius: 1.4rem;
+            background: radial-gradient(circle at top, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0.85));
+            border: 1px solid rgba(148, 163, 184, 0.4);
+            box-shadow:
+                0 18px 45px rgba(15, 23, 42, 0.9),
+                0 0 40px rgba(15, 23, 42, 0.9);
+        }
+
+        .hero-panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.6rem;
+        }
+
+        .hero-panel-title {
+            font-size: 0.85rem;
+            color: var(--muted);
+        }
+
+        .hero-panel-badges {
+            display: flex;
+            gap: 0.35rem;
+        }
+
+        .hero-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 999px;
+        }
+
+        .hero-dot.red {
+            background: #f97373;
+        }
+
+        .hero-dot.yellow {
+            background: #facc15;
+        }
+
+        .hero-dot.green {
+            background: #22c55e;
+        }
+
+        .hero-panel-body {
+            margin-top: 0.4rem;
+            font-size: 0.8rem;
+        }
+
+        .hero-panel-body pre {
+            background: radial-gradient(circle at top left, rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.95));
+            border-radius: 0.9rem;
+            padding: 0.7rem 0.8rem;
+            border: 1px solid rgba(55, 65, 81, 0.8);
+            overflow-x: auto;
+            font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+            color: #e5e7eb;
+        }
+
+        .hero-panel-footer {
+            margin-top: 0.7rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.75rem;
+            color: var(--muted);
+        }
+
+        .hero-pill {
+            padding: 0.2rem 0.6rem;
+            border-radius: 999px;
+            background: rgba(79, 70, 229, 0.2);
+            border: 1px solid rgba(129, 140, 248, 0.6);
+            color: #c7d2fe;
+        }
+
+        /* SEZIONE CARDS */
+        .section {
+            max-width: 1120px;
+            margin: 0 auto;
+            padding: 1.5rem 1.25rem 2.5rem;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: 1rem;
+            margin-bottom: 1.4rem;
+        }
+
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .section-subtitle {
+            font-size: 0.85rem;
+            color: var(--muted);
+        }
+
+        .section-link {
+            font-size: 0.8rem;
+            color: #a5b4fc;
+            text-decoration: none;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 1rem;
+        }
+
+        .card {
+            border-radius: 1rem;
+            padding: 0.9rem;
+            background: radial-gradient(circle at top, rgba(15, 23, 42, 0.96), rgba(15, 23, 42, 0.9));
+            border: 1px solid rgba(148, 163, 184, 0.35);
+            box-shadow: 0 14px 35px rgba(15, 23, 42, 0.9);
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+        }
+
+        .card-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            color: #a5b4fc;
+        }
+
+        .card-title {
+            font-weight: 600;
+        }
+
+        .card-body {
+            color: var(--muted);
+            flex: 1;
+        }
+
+        .card-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.75rem;
+            color: var(--muted);
+        }
+
+        .pill {
+            padding: 0.15rem 0.55rem;
+            border-radius: 999px;
+            border: 1px solid rgba(148, 163, 184, 0.5);
+        }
+
+        /* FOOTER */
+        footer {
+            border-top: 1px solid rgba(31, 41, 55, 0.9);
+            background: radial-gradient(circle at top, #020617, #000);
+        }
+
+        .footer-inner {
+            max-width: 1120px;
+            margin: 0 auto;
+            padding: 1rem 1.25rem 1.4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            font-size: 0.8rem;
+            color: var(--muted);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 0.9rem;
+        }
+
+        .footer-links a {
+            color: var(--muted);
+            text-decoration: none;
+        }
+
+        .footer-links a:hover {
+            color: var(--text);
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 900px) {
+            .hero {
+                grid-template-columns: minmax(0, 1fr);
+            }
+
+            .hero-right {
+                order: -1;
+            }
+
+            .cards {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 640px) {
+            .nav {
+                flex-wrap: wrap;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero {
+                padding-top: 1.5rem;
+            }
+
+            .cards {
+                grid-template-columns: minmax(0, 1fr);
+            }
+
+            .footer-inner {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="nav">
+            <div class="logo">
+                <div class="logo-badge"></div>
+                <div>
+                    <div class="logo-text-main">NexonTech</div>
+                    <div class="logo-text-sub">Code • Community • Experiments</div>
+                </div>
+            </div>
+            <nav class="nav-links">
+                <a href="#progetti">Progetti</a>
+                <a href="#community">Community</a>
+                <a href="#risorse">Risorse</a>
+            </nav>
+            <div class="nav-cta">
+                <button class="btn">
+                    <span>★</span>
+                    Star su GitHub
+                </button>
+                <button class="btn btn-primary">
+                    <span>▶</span>
+                    Entra nel Playground
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- HERO -->
+        <section class="hero">
+            <div>
+                <div class="hero-kicker">
+                    <span>●</span> laboratorio digitale indipendente
+                </div>
+                <h1 class="hero-title">
+                    Costruiamo strumenti reali per
+                    <span>insegnanti, maker e curiosi</span>.
+                </h1>
+                <p class="hero-subtitle">
+                    Sandbox, gradebook, editor e piccole follie di codice: ogni progetto è pensato per essere
+                    usabile, chiaro e un po’ giocoso. Niente vetrine vuote—solo esperimenti vivi.
+                </p>
+                <div class="hero-actions">
+                    <button class="btn btn-primary">
+                        <span>⚡</span>
+                        Prova il Gradebook demo
+                    </button>
+                    <button class="btn">
+                        <span>📂</span>
+                        Esplora i repo su GitHub
+                    </button>
+                </div>
+                <div class="hero-meta">
+                    <div><strong>+10</strong> prototipi attivi</div>
+                    <div><strong>Focus:</strong> HTML/CSS/JS “a mano”, niente framework pesanti</div>
+                    <div><strong>Stato:</strong> sempre in beta, sempre in evoluzione</div>
+                </div>
+            </div>
+
+            <div class="hero-right">
+                <div class="orb"></div>
+                <div class="hero-panel">
+                    <div class="hero-panel-header">
+                        <div class="hero-panel-title">NexusForum • snapshot</div>
+                        <div class="hero-panel-badges">
+                            <div class="hero-dot red"></div>
+                            <div class="hero-dot yellow"></div>
+                            <div class="hero-dot green"></div>
+                        </div>
+                    </div>
+                    <div class="hero-panel-body">
+                        <pre>
+/* NexonTech ritual */
+community.create({
+  mood: "welcoming",
+  style: "hand-crafted",
+  tech: ["HTML", "CSS", "JS"],
+  extras: ["commenti nel codice", "demo reali"]
+});</pre>
+                    </div>
+                    <div class="hero-panel-footer">
+                        <span class="hero-pill">Live playground</span>
+                        <span>Ultimo update: oggi, tardi la notte</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CARDS: PROGETTI -->
+        <section class="section" id="progetti">
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title">Progetti in evidenza</h2>
+                    <p class="section-subtitle">
+                        Strumenti concreti, pensati per essere usati davvero in classe, in laboratorio o per gioco.
+                    </p>
+                </div>
+                <a href="https://github.com/Nex0nTech" class="section-link">Vedi tutti i repository →</a>
+            </div>
+
+            <div class="cards">
+                <article class="card">
+                    <div class="card-label">Gradebook</div>
+                    <div class="card-title">Registro per insegnanti in un solo file HTML</div>
+                    <p class="card-body">
+                        Studenti, voti, note, presenze e lezioni: tutto in una pagina, senza backend.
+                        Pensato per essere leggibile, modificabile e clonabile.
+                    </p>
+                    <div class="card-meta">
+                        <span class="pill">Demo inclusa</span>
+                        <span>Stato: attivo</span>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <div class="card-label">NexusForum</div>
+                    <div class="card-title">Forum leggero per condividere esperimenti</div>
+                    <p class="card-body">
+                        Un luogo per postare snippet, prototipi e piccole scoperte. Niente like tossici,
+                        solo feedback onesto e curiosità.
+                    </p>
+                    <div class="card-meta">
+                        <span class="pill">Community-first</span>
+                        <span>Stato: in costruzione</span>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <div class="card-label">Playground</div>
+                    <div class="card-title">Mini sandbox per HTML/CSS/JS</div>
+                    <div class="card-meta">
+                        <span class="pill">Zero build tools</span>
+                        <span>Stato: prototipo</span>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- CARDS: COMMUNITY / RISORSE -->
+        <section class="section" id="community">
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title">Community & risorse</h2>
+                    <p class="section-subtitle">
+                        L’obiettivo è semplice: imparare insieme, condividere codice reale e non avere paura di mostrare i work-in-progress.
+                    </p>
+                </div>
+                <a href="#risorse" class="section-link">Vai alle guide →</a>
+            </div>
+
+            <div class="cards">
+                <article class="card">
+                    <div class="card-label">Guide</div>
+                    <div class="card-title">Tutorial in stile NexonTech</div>
+                    <div class="card-meta">
+                        <span class="pill">HTML/CSS/JS</span>
+                        <span>Nuovi ogni mese</span>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <div class="card-label">Feedback</div>
+                    <div class="card-title">Issue come conversazioni, non lamentele</div>
+                    <p class="card-body">
+                        Le issue su GitHub sono usate come chat tecnica: idee, bug, proposte di miglioramento.
+                        Ogni commento è un pezzo di documentazione viva.
+                    </p>
+                    <div class="card-meta">
+                        <span class="pill">Open discussion</span>
+                        <span>Zero ego</span>
+                    </div>
+                </article>
+
+                <article class="card" id="risorse">
+                    <div class="card-label">Setup</div>
+                    <div class="card-title">Ambienti leggeri, realistici</div>
+                    <div class="card-meta">
+                        <span class="pill">QEMU / ChromeOS / Linux</span>
+                        <span>Note tecniche incluse</span>
+                    </div>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-inner">
+            <div>© <span id="year"></span> NexonTech • Piccoli esperimenti, grande cura nei dettagli.</div>
+            <div class="footer-links">
+                <a href="https://github.com/Nex0nTech">GitHub</a>
+                <a href="#community">Community</a>
+                <a href="#progetti">Progetti</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Aggiorna automaticamente l'anno nel footer
+        document.getElementById("year").textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>
