@@ -1,536 +1,294 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-    <meta charset="UTF-8" />
-    <title>NexonTech Hub</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <style>
-        :root {
-            --bg: #050816;
-            --bg-alt: #0b1020;
-            --accent: #4f46e5;
-            --accent-soft: rgba(79, 70, 229, 0.25);
-            --text: #f9fafb;
-            --muted: #9ca3af;
-            --card: rgba(15, 23, 42, 0.85);
-            --border: rgba(148, 163, 184, 0.3);
-            --danger: #f97373;
-            --success: #22c55e;
-        }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexusForum</title>
 
+    <style>
+        /* ====== RESET ====== */
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+            font-family: "Inter", sans-serif;
         }
 
         body {
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
-                "Segoe UI", sans-serif;
-            background: radial-gradient(circle at top, #111827 0, #020617 45%, #000 100%);
-            color: var(--text);
-            min-height: 100vh;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        /* ====== THEMES ====== */
+        body.light {
+            background: #f5f5f5;
+            color: #222;
+        }
+
+        body.dark {
+            background: #0f0f17;
+            color: #e6e6e6;
+        }
+
+        /* ====== NAVBAR ====== */
+        nav {
+            width: 100%;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(20, 20, 30, 0.8);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 100;
+        }
+
+        nav .logo {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #6a5cff;
+        }
+
+        nav ul {
+            display: flex;
+            gap: 25px;
+            list-style: none;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: inherit;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: #6a5cff;
+        }
+
+        /* ====== THEME SWITCH ====== */
+        .theme-switch {
+            cursor: pointer;
+            font-size: 1.3rem;
+            padding: 8px 12px;
+            border-radius: 8px;
+            background: #6a5cff;
+            color: white;
+            border: none;
+            transition: 0.3s;
+        }
+
+        .theme-switch:hover {
+            background: #584dff;
+        }
+
+        /* ====== HERO ====== */
+        .hero {
+            height: 100vh;
             display: flex;
             flex-direction: column;
-        }
-
-        /* NAVBAR */
-        header {
-            position: sticky;
-            top: 0;
-            z-index: 20;
-            backdrop-filter: blur(18px);
-            background: linear-gradient(
-                to bottom,
-                rgba(15, 23, 42, 0.95),
-                rgba(15, 23, 42, 0.7),
-                transparent
-            );
-            border-bottom: 1px solid rgba(148, 163, 184, 0.25);
-        }
-
-        .nav {
-            max-width: 1120px;
-            margin: 0 auto;
-            padding: 0.75rem 1.25rem;
-            display: flex;
+            justify-content: center;
             align-items: center;
-            justify-content: space-between;
-            gap: 1rem;
+            text-align: center;
+            padding: 0 20px;
         }
 
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
         }
 
-        .logo-badge {
-            width: 32px;
-            height: 32px;
-            border-radius: 0.9rem;
-            background: radial-gradient(circle at 20% 0, #a855f7, #4f46e5 45%, #0ea5e9 100%);
-            box-shadow:
-                0 0 18px rgba(79, 70, 229, 0.8),
-                0 0 40px rgba(14, 165, 233, 0.5);
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            opacity: 0.8;
         }
 
-        .logo-text-main {
-            font-weight: 700;
-            letter-spacing: 0.04em;
-            font-size: 1rem;
-        }
-
-        .logo-text-sub {
-            font-size: 0.75rem;
-            color: var(--muted);
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 1.25rem;
-            font-size: 0.9rem;
-        }
-
-        .nav-links a {
-            color: var(--muted);
-            text-decoration: none;
-            position: relative;
-            padding-bottom: 0.15rem;
-        }
-
-        .nav-links a::after {
-            content: "";
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            width: 0;
-            height: 2px;
-            border-radius: 999px;
-            background: linear-gradient(to right, #4f46e5, #22c55e);
-            transition: width 0.2s ease-out;
-        }
-
-        .nav-links a:hover {
-            color: var(--text);
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        .nav-cta {
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        .btn {
-            border-radius: 999px;
-            padding: 0.45rem 0.9rem;
-            font-size: 0.8rem;
-            border: 1px solid rgba(148, 163, 184, 0.4);
-            background: rgba(15, 23, 42, 0.8);
-            color: var(--text);
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.35rem;
-            transition: all 0.18s ease-out;
-            text-decoration: none;
-        }
-
-        .btn span {
-            font-size: 1rem;
-        }
-
-        .btn-primary {
-            border-color: transparent;
-            background: linear-gradient(135deg, #4f46e5, #0ea5e9);
-            box-shadow:
-                0 0 18px rgba(79, 70, 229, 0.7),
-                0 0 40px rgba(14, 165, 233, 0.5);
-        }
-
-        .btn:hover {
-            transform: translateY(-1px);
-            box-shadow:
-                0 10px 25px rgba(15, 23, 42, 0.7),
-                0 0 25px rgba(79, 70, 229, 0.4);
-        }
-
-        /* HERO */
-        main {
-            flex: 1;
-        }
-
-        .hero {
-            max-width: 1120px;
-            margin: 0 auto;
-            padding: 2.5rem 1.25rem 2rem;
-            display: grid;
-            grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
-            gap: 2.5rem;
-            align-items: center;
-        }
-
-        .hero-kicker {
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 0.18em;
-            color: #a5b4fc;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.4rem;
-            padding: 0.25rem 0.7rem;
-            border-radius: 999px;
-            border: 1px solid rgba(129, 140, 248, 0.4);
-            background: radial-gradient(circle at top left, rgba(79, 70, 229, 0.35), transparent);
-        }
-
-        .hero-title {
-            margin-top: 1.1rem;
-            font-size: clamp(2.4rem, 4vw, 3.1rem);
-            line-height: 1.1;
-            letter-spacing: 0.02em;
-        }
-
-        .hero-title span {
-            background: linear-gradient(120deg, #4f46e5, #a855f7, #22c55e);
-            -webkit-background-clip: text;
-            color: transparent;
-        }
-
-        .hero-subtitle {
-            margin-top: 0.9rem;
-            color: var(--muted);
-            font-size: 0.98rem;
-            max-width: 34rem;
-        }
-
-        .hero-actions {
-            margin-top: 1.4rem;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.7rem;
-        }
-
-        .hero-meta {
-            margin-top: 1.4rem;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1.5rem;
-            font-size: 0.8rem;
-            color: var(--muted);
-        }
-
-        .hero-meta strong {
-            color: var(--text);
-            font-weight: 600;
-        }
-
-        .hero-right {
-            position: relative;
-            min-height: 260px;
-        }
-
-        .orb {
-            position: absolute;
-            inset: 0;
-            border-radius: 1.8rem;
-            background:
-                radial-gradient(circle at 0 0, rgba(79, 70, 229, 0.6), transparent 55%),
-                radial-gradient(circle at 100% 0, rgba(14, 165, 233, 0.5), transparent 55%),
-                radial-gradient(circle at 50% 100%, rgba(34, 197, 94, 0.4), transparent 55%);
-            opacity: 0.9;
-            filter: blur(1px);
-        }
-
-        .hero-panel {
-            position: relative;
-            z-index: 1;
-            margin: 0.4rem;
-            padding: 1rem;
-            border-radius: 1.4rem;
-            background: radial-gradient(circle at top, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0.85));
-            border: 1px solid rgba(148, 163, 184, 0.4);
-            box-shadow:
-                0 18px 45px rgba(15, 23, 42, 0.9),
-                0 0 40px rgba(15, 23, 42, 0.9);
-        }
-
-        .hero-panel-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 0.6rem;
-        }
-
-        .hero-panel-title {
-            font-size: 0.85rem;
-            color: var(--muted);
-        }
-
-        .hero-panel-badges {
-            display: flex;
-            gap: 0.35rem;
-        }
-
-        .hero-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 999px;
-        }
-
-        .hero-dot.red { background: #f97373; }
-        .hero-dot.yellow { background: #facc15; }
-        .hero-dot.green { background: #22c55e; }
-
-        .hero-panel-body pre {
-            background: radial-gradient(circle at top left, rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.95));
-            border-radius: 0.9rem;
-            padding: 0.7rem 0.8rem;
-            border: 1px solid rgba(55, 65, 81, 0.8);
-            overflow-x: auto;
-            font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-            color: #e5e7eb;
-            font-size: 0.8rem;
-        }
-
-        .hero-panel-footer {
-            margin-top: 0.7rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.75rem;
-            color: var(--muted);
-        }
-
-        .hero-pill {
-            padding: 0.2rem 0.6rem;
-            border-radius: 999px;
-            background: rgba(79, 70, 229, 0.2);
-            border: 1px solid rgba(129, 140, 248, 0.6);
-            color: #c7d2fe;
-        }
-
-        /* SEZIONE CARDS */
-        .section {
-            max-width: 1120px;
-            margin: 0 auto;
-            padding: 1.5rem 1.25rem 2.5rem;
-        }
-
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-            gap: 1rem;
-            margin-bottom: 1.4rem;
-        }
-
-        .section-title {
+        .hero .cta {
+            margin-top: 30px;
+            padding: 14px 32px;
+            background: #6a5cff;
+            color: white;
+            border: none;
+            border-radius: 8px;
             font-size: 1.1rem;
-            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
         }
 
-        .section-subtitle {
-            font-size: 0.85rem;
-            color: var(--muted);
+        .hero .cta:hover {
+            background: #584dff;
         }
 
-        .section-link {
-            font-size: 0.8rem;
-            color: #a5b4fc;
-            text-decoration: none;
-        }
-
-        .cards {
+        /* ====== CARDS ====== */
+        .features {
+            padding: 80px 40px;
             display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 1rem;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 30px;
         }
 
         .card {
-            border-radius: 1rem;
-            padding: 0.9rem;
-            background: radial-gradient(circle at top, rgba(15, 23, 42, 0.96), rgba(15, 23, 42, 0.9));
-            border: 1px solid rgba(148, 163, 184, 0.35);
-            box-shadow: 0 14px 35px rgba(15, 23, 42, 0.9);
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-            font-size: 0.85rem;
+            background: rgba(30, 30, 45, 0.6);
+            padding: 30px;
+            border-radius: 12px;
+            transition: 0.3s;
+            border: 1px solid transparent;
         }
 
-        .card-label {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.16em;
-            color: #a5b4fc;
+        body.light .card {
+            background: white;
         }
 
-        .card-title {
-            font-weight: 600;
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: #6a5cff;
         }
 
-        .card-body {
-            color: var(--muted);
-            flex: 1;
+        .card h3 {
+            margin-bottom: 10px;
+            color: #6a5cff;
         }
 
-        .card-meta {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.75rem;
-            color: var(--muted);
+        .card p {
+            opacity: 0.8;
         }
 
-        .pill {
-            padding: 0.15rem 0.55rem;
-            border-radius: 999px;
-            border: 1px solid rgba(148, 163, 184, 0.5);
-        }
-
-        /* FOOTER */
+        /* ====== FOOTER ====== */
         footer {
-            border-top: 1px solid rgba(31, 41, 55, 0.9);
-            background: radial-gradient(circle at top, #020617, #000);
+            text-align: center;
+            padding: 30px;
+            margin-top: 40px;
+            color: #777;
         }
 
-        .footer-inner {
-            max-width: 1120px;
-            margin: 0 auto;
-            padding: 1rem 1.25rem 1.4rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 1rem;
-            font-size: 0.8rem;
-            color: var(--muted);
+        /* ====== COOKIE BANNER ====== */
+        #cookie-banner {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1a1a27;
+            color: white;
+            padding: 20px 30px;
+            border-radius: 12px;
+            display: none;
+            z-index: 200;
         }
 
-        .footer-links {
-            display: flex;
-            gap: 0.9rem;
-        }
-
-        .footer-links a {
-            color: var(--muted);
-            text-decoration: none;
-        }
-
-        .footer-links a:hover {
-            color: var(--text);
-        }
-
-        /* RESPONSIVE */
-        @media (max-width: 900px) {
-            .hero {
-                grid-template-columns: minmax(0, 1fr);
-            }
-
-            .hero-right {
-                order: -1;
-            }
-
-            .cards {
-                grid-template-columns: repeat(2, minmax(0, 1fr));
-            }
-        }
-
-        @media (max-width: 640px) {
-            .nav {
-                flex-wrap: wrap;
-            }
-
-            .nav-links {
-                display: none;
-            }
-
-            .hero {
-                padding-top: 1.5rem;
-            }
-
-            .cards {
-                grid-template-columns: minmax(0, 1fr);
-            }
-
-            .footer-inner {
-                flex-direction: column;
-                align-items: flex-start;
-            }
+        #cookie-banner button {
+            margin-left: 20px;
+            padding: 8px 16px;
+            background: #6a5cff;
+            border: none;
+            border-radius: 8px;
+            color: white;
+            cursor: pointer;
         }
     </style>
 </head>
-<body>
-    <header>
-        <div class="nav">
-            <div class="logo">
-                <div class="logo-badge"></div>
-                <div>
-                    <div class="logo-text-main">NexonTech</div>
-                    <div class="logo-text-sub">Code • Community • Experiments</div>
-                </div>
-            </div>
-            <nav class="nav-links">
-                <a href="#progetti">Progetti</a>
-                <a href="#community">Community</a>
-                <a href="#risorse">Risorse</a>
-            </nav>
-            <div class="nav-cta">
-                <a href="https://github.com/Nex0nTech" class="btn">
-                    <span>★</span>
-                    Star su GitHub
-                </a>
-                <a href="https://nex0ntech.github.io/Playground" class="btn btn-primary">
-                    <span>▶</span>
-                    Playground
-                </a>
-            </div>
+
+<body class="dark">
+
+    <nav>
+        <div class="logo">NexusForum</div>
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Forum</a></li>
+            <li><a href="#">Categorie</a></li>
+        </ul>
+        <button class="theme-switch" id="themeBtn">🌙</button>
+    </nav>
+
+    <section class="hero">
+        <h1>Benvenuto su NexusForum</h1>
+        <p>La piattaforma dove le idee si incontrano. Condividi, discuti e crea connessioni con una community moderna e dinamica.</p>
+        <button class="cta">Entra nel Forum</button>
+    </section>
+
+    <section class="features">
+        <div class="card">
+            <h3>💬 Discussioni Moderne</h3>
+            <p>Un sistema di thread chiaro, veloce e intuitivo per conversazioni fluide.</p>
         </div>
-    </header>
 
-    <main>
-        <!-- HERO -->
-        <section class="hero">
-            <div>
-                <div class="hero-kicker">
-                    <span>●</span> laboratorio digitale indipendente
-                </div>
-                <h1 class="hero-title">
-                    Esperimenti web, community e strumenti creati a mano per
-                    <span>maker e curiosi</span>.
-                </h1>
-                <p class="hero-subtitle">
-                    Forum, playground, micro‑tool e prototipi: tutto scritto in HTML/CSS/JS puro,
-                    con un’estetica giocosa e un approccio artigianale.
-                </p>
+        <div class="card">
+            <h3>⚡ Performance</h3>
+            <p>Un design ottimizzato per caricamenti rapidi e un'esperienza senza lag.</p>
+        </div>
 
-                <div class="hero-actions">
-                    <a href="https://nex0ntech.github.io/NexusForum" class="btn btn-primary">
-                        <span>💬</span>
-                        Entra nel NexusForum
-                    </a>
-                    <a href="https://nex0ntech.github.io/Playground" class="btn">
-                        <span>🧪</span>
-                        Apri il Playground
-                    </a>
-                    <a href="https://github.com/Nex0nTech" class="btn">
-                        <span>📂</span>
-                        Repo GitHub
-                    </a>
-                </div>
+        <div class="card">
+            <h3>🔒 Sicurezza</h3>
+            <p>Protezione avanzata dei dati e gestione sicura degli account.</p>
+        </div>
 
-                <div class="hero-meta">
-                    <div><strong>+10</strong> prototipi attivi</div>
-                    <div><strong>Focus:</strong> HTML/CSS/JS “a mano”</div>
-                    <div><strong>Stato:</strong> work‑in‑progress continuo</div>
-                </div>
-            </div>
+        <div class="card">
+            <h3>🎨 Personalizzazione</h3>
+            <p>Temi, profili e impostazioni per rendere il forum davvero tuo.</p>
+        </div>
+    </section>
 
-            <div class="hero-right">
-                <div class="orb"></div>
-                <div class="hero-panel">
-                    <div class="hero-panel-header">
-                        <
+    <footer>
+        © 2026 NexusForum — Tutti i diritti riservati.
+    </footer>
+
+    <!-- COOKIE BANNER -->
+    <div id="cookie-banner">
+        Questo sito utilizza cookie per ricordare il tema scelto.
+        <button id="acceptCookies">Accetta</button>
+    </div>
+
+    <script>
+        const themeBtn = document.getElementById("themeBtn");
+        const cookieBanner = document.getElementById("cookie-banner");
+        const acceptBtn = document.getElementById("acceptCookies");
+
+        function setCookie(name, value, days) {
+            const d = new Date();
+            d.setTime(d.getTime() + (days*24*60*60*1000));
+            document.cookie = `${name}=${value};expires=${d.toUTCString()};path=/`;
+        }
+
+        function getCookie(name) {
+            const cookies = document.cookie.split("; ");
+            for (let c of cookies) {
+                const [key, val] = c.split("=");
+                if (key === name) return val;
+            }
+            return null;
+        }
+
+        // Mostra banner se non hai accettato
+        if (!getCookie("cookiesAccepted")) {
+            cookieBanner.style.display = "block";
+        }
+
+        acceptBtn.onclick = () => {
+            setCookie("cookiesAccepted", "true", 365);
+            cookieBanner.style.display = "none";
+        };
+
+        // Gestione tema
+        function applyTheme(theme) {
+            document.body.className = theme;
+            themeBtn.textContent = theme === "dark" ? "🌙" : "☀️";
+        }
+
+        // Carica tema solo se cookie accettati
+        if (getCookie("cookiesAccepted") && getCookie("theme")) {
+            applyTheme(getCookie("theme"));
+        }
+
+        themeBtn.onclick = () => {
+            const newTheme = document.body.classList.contains("dark") ? "light" : "dark";
+            applyTheme(newTheme);
+
+            if (getCookie("cookiesAccepted")) {
+                setCookie("theme", newTheme, 365);
+            }
+        };
+    </script>
+
+</body>
+</html>
