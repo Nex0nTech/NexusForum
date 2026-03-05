@@ -6,7 +6,6 @@
     <title>NexusForum</title>
 
     <style>
-        /* ====== RESET ====== */
         * {
             margin: 0;
             padding: 0;
@@ -18,7 +17,6 @@
             transition: background 0.3s, color 0.3s;
         }
 
-        /* ====== THEMES ====== */
         body.light {
             background: #f5f5f5;
             color: #222;
@@ -29,7 +27,6 @@
             color: #e6e6e6;
         }
 
-        /* ====== NAVBAR ====== */
         nav {
             width: 100%;
             padding: 20px 40px;
@@ -67,7 +64,11 @@
             color: #6a5cff;
         }
 
-        /* ====== THEME SWITCH ====== */
+        nav ul li a.active {
+            font-weight: 800;
+            color: #6a5cff;
+        }
+
         .theme-switch {
             cursor: pointer;
             font-size: 1.3rem;
@@ -83,7 +84,6 @@
             background: #584dff;
         }
 
-        /* ====== HERO ====== */
         .hero {
             height: 100vh;
             display: flex;
@@ -105,23 +105,6 @@
             opacity: 0.8;
         }
 
-        .hero .cta {
-            margin-top: 30px;
-            padding: 14px 32px;
-            background: #6a5cff;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .hero .cta:hover {
-            background: #584dff;
-        }
-
-        /* ====== CARDS ====== */
         .features {
             padding: 80px 40px;
             display: grid;
@@ -155,7 +138,6 @@
             opacity: 0.8;
         }
 
-        /* ====== FOOTER ====== */
         footer {
             text-align: center;
             padding: 30px;
@@ -163,7 +145,6 @@
             color: #777;
         }
 
-        /* ====== COOKIE BANNER ====== */
         #cookie-banner {
             position: fixed;
             bottom: 20px;
@@ -194,9 +175,9 @@
     <nav>
         <div class="logo">NexusForum</div>
         <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Forum</a></li>
-            <li><a href="#">Categorie</a></li>
+            <li><a href="index.html" class="active">Home</a></li>
+            <li><a href="forum.html">Forum</a></li>
+            <li><a href="categs.html">Categorie</a></li>
         </ul>
         <button class="theme-switch" id="themeBtn">🌙</button>
     </nav>
@@ -204,7 +185,6 @@
     <section class="hero">
         <h1>Benvenuto su NexusForum</h1>
         <p>La piattaforma dove le idee si incontrano. Condividi, discuti e crea connessioni con una community moderna e dinamica.</p>
-        <button class="cta">Entra nel Forum</button>
     </section>
 
     <section class="features">
@@ -219,11 +199,6 @@
         </div>
 
         <div class="card">
-            <h3>🔒 Sicurezza</h3>
-            <p>Protezione avanzata dei dati e gestione sicura degli account.</p>
-        </div>
-
-        <div class="card">
             <h3>🎨 Personalizzazione</h3>
             <p>Temi, profili e impostazioni per rendere il forum davvero tuo.</p>
         </div>
@@ -233,7 +208,6 @@
         © 2026 NexusForum — Tutti i diritti riservati.
     </footer>
 
-    <!-- COOKIE BANNER -->
     <div id="cookie-banner">
         Questo sito utilizza cookie per ricordare il tema scelto.
         <button id="acceptCookies">Accetta</button>
@@ -259,7 +233,6 @@
             return null;
         }
 
-        // Mostra banner se non hai accettato
         if (!getCookie("cookiesAccepted")) {
             cookieBanner.style.display = "block";
         }
@@ -269,13 +242,11 @@
             cookieBanner.style.display = "none";
         };
 
-        // Gestione tema
         function applyTheme(theme) {
             document.body.className = theme;
             themeBtn.textContent = theme === "dark" ? "🌙" : "☀️";
         }
 
-        // Carica tema solo se cookie accettati
         if (getCookie("cookiesAccepted") && getCookie("theme")) {
             applyTheme(getCookie("theme"));
         }
